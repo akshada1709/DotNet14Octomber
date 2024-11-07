@@ -29,6 +29,12 @@ namespace ArrayExample1
             int[] arr2 = new int[10] { 23, 11, 56, 32, 78, 90, 0, 93, 1, 88 };
             int[] arr3 = new int[4];
 
+            Console.WriteLine("Original array ");
+            foreach(int aa in arr2) 
+            {
+                Console.WriteLine(aa);
+            }
+
             //sort array
             Console.WriteLine($"Sort array is");
             Array.Sort(arr2);
