@@ -35,8 +35,8 @@ namespace ArrayAssigment1
         }
     }
 
-    class Program
-    {
+    //class Program
+    //{
         //static void Main(string[] args)
         //{
         //    ShiftEvenbefOdd shiftEvenBeforeOdd = new ShiftEvenbefOdd();
@@ -51,5 +51,5 @@ namespace ArrayAssigment1
 
         //    Console.ReadLine();
         //}
-    }
+    //}
 }
