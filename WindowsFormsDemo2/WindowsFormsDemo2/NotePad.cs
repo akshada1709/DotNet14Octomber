@@ -24,12 +24,22 @@ namespace WindowsFormsDemo2
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            richTextBox1.Cut();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Paste();
         }
     }
 }
