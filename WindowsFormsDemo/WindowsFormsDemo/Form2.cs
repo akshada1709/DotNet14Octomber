@@ -30,27 +30,39 @@ namespace WindowsFormsDemo
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            string city= txtCity.Text;
+            string city = txtCity.Text.Trim(); // Get the city name and trim whitespace
+
+            if (string.IsNullOrEmpty(city))
+            {
+                MessageBox.Show("City name cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (cities.Contains(city))
             {
-                MessageBox.Show("City is exist");
-
+                MessageBox.Show("City already exists in the list.", "Duplicate", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else 
+            else
             {
-                cities.Add(city);
+                cities.Add(city); // Add city to the list
+                listBoxCities.Items.Add(city); // Add city to the list box
+                txtCity.Clear(); // Clear the input field
             }
-            
 
         }
 
         private void butRemove_Click(object sender, EventArgs e)
         {
-            if (listBoxCities.SelectedItems != null) 
+            if (listBoxCities.SelectedItem != null) // Check if an item is selected
             {
-               string selectcity=listBoxCities.SelectedItems.ToString();
-                listBoxCities.
+                string selectedCity = listBoxCities.SelectedItem.ToString();
 
+                cities.Remove(selectedCity); // Remove the city from the list
+                listBoxCities.Items.Remove(selectedCity); // Remove the city from the list box
+            }
+            else
+            {
+                MessageBox.Show("Please select a city to remove.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
