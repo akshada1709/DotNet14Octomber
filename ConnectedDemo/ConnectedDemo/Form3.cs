@@ -23,9 +23,10 @@ namespace ConnectedDemo
 
         public void ClearFormFields() 
         {
-           txtRollNo.Clear();
+            txtRollNo.Clear();
             txtName.Clear();
             txtPercentage.Clear();
+            comboBox1.SelectedIndex = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
