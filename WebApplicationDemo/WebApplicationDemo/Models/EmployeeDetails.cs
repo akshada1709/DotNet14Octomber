@@ -1,6 +1,6 @@
 ﻿namespace WebApplicationDemo.Models
 {
-    public class EmployeeDetails
+    public class Employee
     {
         public int Id { set ; get;}
         public string Name { set; get; }

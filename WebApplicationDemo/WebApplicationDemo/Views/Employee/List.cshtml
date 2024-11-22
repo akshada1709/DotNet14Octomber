@@ -31,7 +31,7 @@
             <th>Salary</th>
         </tr>
 
-        @foreach (EmployeeDetails e in (IEnumerable<EmployeeDetails>)ViewData["emp"])
+        @foreach (Employee e in (IEnumerable<Employee>)ViewData["emp"])
         {
             <tr>
                 <td>@e.Id</td>

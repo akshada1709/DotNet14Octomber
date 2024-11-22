@@ -4,7 +4,7 @@ using WebApplicationDemo.Models;
 
 namespace WebApplicationDemo.Controllers
 {
-    public class Employee : Controller
+    public class EmployeeController : Controller
     {
         public IActionResult List()
         {
@@ -14,12 +14,12 @@ namespace WebApplicationDemo.Controllers
             ViewData["names"] = names; //object
 
             //list
-            List<EmployeeDetails> list = new List<EmployeeDetails>() {
+            List<Employee> list = new List<Employee>() {
             
-              new EmployeeDetails{Id=101,Name="Akshada",Dept="Devlopment",Salary=30000},
-               new EmployeeDetails{Id=101,Name="Ankita",Dept="HR",Salary=60000},
-                new EmployeeDetails{Id=101,Name="Sonam",Dept="QA",Salary=50000},
-                 new EmployeeDetails{Id=101,Name="Megha",Dept="Finance",Salary=40000},
+              new Employee{Id=101,Name="Akshada",Dept="Devlopment",Salary=30000},
+               new Employee{Id=102,Name="Ankita",Dept="HR",Salary=60000},
+                new Employee{Id=103,Name="Sonam",Dept="QA",Salary=50000},
+                 new Employee{Id=104,Name="Megha",Dept="Finance",Salary=40000},
             };
 
             ViewData["emp"] = list;
