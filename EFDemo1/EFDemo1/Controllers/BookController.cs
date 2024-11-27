@@ -97,10 +97,10 @@ namespace EFDemo1.Controllers
         // GET: BookController/Delete/5
         public ActionResult Delete(int id)
         {
-            var book = bookCrud.GetBookById(id);  // Corrected here to use bookCrud
+            var book = bookCrud.GetBookById(id);  
             if (book == null)
             {
-                return NotFound();  // Return NotFound if the book is not found
+                return NotFound();  
             }
             return View(book);
         }
@@ -112,20 +112,20 @@ namespace EFDemo1.Controllers
         {
             try
             {
-                var result = bookCrud.DeleteBook(id); // This should delete the book by id
-                if (result > 0)  // Check if the book was deleted
+                var result = bookCrud.DeleteBook(id);
+                if (result > 0)  
                 {
-                    return RedirectToAction(nameof(Index));  // Redirect to Index page after successful delete
+                    return RedirectToAction(nameof(Index));  
                 }
                 else
                 {
-                    // Handle the case when the book could not be deleted, maybe log the error or show a message
+                    
                     return RedirectToAction(nameof(Delete), new { id });
                 }
             }
             catch
             {
-                // If an exception occurs, redirect to the Delete page to show the error or confirm the delete again
+                
                 return RedirectToAction(nameof(Delete), new { id });
             }
         }
