@@ -3,7 +3,7 @@
     ViewData["Title"] = "List";
 }
 
-<h1>Employee List</h1>
+<h1>Employee List display by ViewData</h1>
 
 <h2>
     @ViewData["message"]
@@ -46,3 +46,44 @@
 
 </div>
 
+<h1>Data Display by ViewBag</h1>
+
+<div>
+    <ol>
+        @foreach (string s in ViewBag.Names)
+        {
+            <li>
+                @s
+            </li>
+        }
+    </ol>
+</div>
+
+<div>
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Dept</th>
+            <th>Salary</th>
+        </tr>
+
+        @foreach (Employee e in ViewBag.Emp)
+        {
+            <tr>
+                <td>@e.Id</td>
+                <td>@e.Name</td>
+                <td>@e.Dept</td>
+                <td>@e.Salary</td>
+
+
+            </tr>
+        }
+    </table>
+
+</div>
+
+<p>
+    @TempData["message"]
+</p>

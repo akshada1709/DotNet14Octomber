@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Student";
+}
+
+<h1>Student Details</h1>
+
+<form asp-action="StudentDetails">
+    <table>
+        <tr>
+            <td>Enter Roll No</td>
+            <td>@Html.TextBox("rollNo")</td>
+        </tr>
+        <tr>
+            <td>Enter Name</td>
+            <td>@Html.TextBox("name")</td>
+        </tr>
+        <tr>
+            <td>Enter Branch</td>
+            <td>@Html.DropDownList("branch", ViewData["branch"] as SelectList, "Select a branch")</td>
+        </tr>
+        <tr>
+            <td>Enter Pass Out Year</td>
+            <td>
+                @Html.RadioButton("passOut", "2022") 2022<br />
+                @Html.RadioButton("passOut", "2023") 2023<br />
+                @Html.RadioButton("passOut", "2024") 2024
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>

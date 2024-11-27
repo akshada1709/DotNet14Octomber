@@ -12,6 +12,9 @@ namespace WebApplicationDemo.Controllers
             List<string> names = new List<string>() { "Akshada","Gayatri","Mayuri","Sneha"};
 
             ViewData["names"] = names; //object
+            ViewBag.Names = names;//from ViewBag
+            TempData["message"] = "Hello from Employee Controller";
+            TempData.Keep("message");
 
             //list
             List<Employee> list = new List<Employee>() {
@@ -23,6 +26,7 @@ namespace WebApplicationDemo.Controllers
             };
 
             ViewData["emp"] = list;
+            ViewBag.Emp = list;//from ViewBag
             return View();
         }
     }
