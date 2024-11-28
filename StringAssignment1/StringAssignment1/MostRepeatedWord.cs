@@ -10,7 +10,8 @@ namespace StringAssignment1
     {
         static void Main(string[] args)
         {
-           
+            //3.WAP to find the most repeated word in a string
+
             string str = "i love java,java is simple and java is platform independent";
 
            

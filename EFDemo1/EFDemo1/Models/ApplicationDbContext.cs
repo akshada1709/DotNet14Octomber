@@ -14,6 +14,7 @@ namespace EFDemo1.Models
         // Entity <Employee> 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Book>Books { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
 
