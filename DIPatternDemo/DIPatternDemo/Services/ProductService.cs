@@ -1,7 +1,7 @@
-﻿using DIPatternDemo1.Models;
-using DIPatternDemo1.Repositories;
+﻿using DIPatternDemo.Models;
+using DIPatternDemo.Repositories;
 
-namespace DIPatternDemo1.Services
+namespace DIPatternDemo.Services
 {
     public class ProductService : IProductService
     {
@@ -11,15 +11,14 @@ namespace DIPatternDemo1.Services
         {
             this.repo = repo;
         }
-
-        public int AddProduct(Product prod)
+        public int AddProduct(Product product)
         {
-            return repo.AddProduct(prod);
+            return repo.AddProduct(product);
         }
 
         public int DeleteProduct(int id)
         {
-           return repo.DeleteProduct(id);
+            return repo.DeleteProduct(id);
         }
 
         public Product GetProductById(int id)
@@ -32,9 +31,9 @@ namespace DIPatternDemo1.Services
             return repo.GetProducts();
         }
 
-        public int UpdateProduct(Product prod)
+        public int UpdateProduct(Product product)
         {
-            return repo.UpdateProduct(prod);
+            return repo.UpdateProduct(product);
         }
     }
 }

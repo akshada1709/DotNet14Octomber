@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DIPatternDemo.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Add Student</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StdRollNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StdName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StdBranch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StdPercentage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StdRollNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StdName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StdBranch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StdPercentage)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  rollno=item.StdRollNo  }) |
+                @Html.ActionLink("Details", "Details", new { rollno = item.StdRollNo }) |
+                @Html.ActionLink("Delete", "Delete", new { rollno = item.StdRollNo })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,6 +1,6 @@
-using DIPatternDemo1.Data;
-using DIPatternDemo1.Repositories;
-using DIPatternDemo1.Services;
+using DIPatternDemo.Data;
+using DIPatternDemo.Repositories;
+using DIPatternDemo.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,20 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(op=>op.UseSqlServer(conn));
+builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(conn));
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
-
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
-
 
 var app = builder.Build();
 
