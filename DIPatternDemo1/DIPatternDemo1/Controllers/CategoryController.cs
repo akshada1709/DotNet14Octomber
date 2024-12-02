@@ -41,24 +41,20 @@ namespace DIPatternDemo1.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                int response = service.AddCategory(category);
+                if (response >= 1)
                 {
-                    var result = service.AddCategory(category);
-                    if (result >= 1)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Something went wrong while adding the category.";
-                        return View();
-                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                return View();
+                else
+                {
+                    ViewBag.ErrorMsg = "Something went wrong";
+                    return View();
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.ErrorMsg = ex.Message;
                 return View();
             }
         }
@@ -133,6 +129,7 @@ namespace DIPatternDemo1.Controllers
                     return View();
                 }
             }
+
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;

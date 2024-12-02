@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DIPatternDemo.Models
 {
-    [Table("Product")]
+    [Table("Product1")]
     public class Product
     {
         [Key]

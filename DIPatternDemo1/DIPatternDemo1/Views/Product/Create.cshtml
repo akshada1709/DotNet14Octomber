@@ -14,9 +14,9 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-            <label asp-for="ProductId" class="control-label"></label>
-            <input asp-for="ProductId" class="form-control" />
-            <span asp-validation-for="ProductId" class="text-danger"></span>
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>*@
             <div class="form-group mb-3">
                 <label asp-for="ProductName" class="control-label"></label>
@@ -30,7 +30,10 @@
             </div>
             <div class="form-group mb-3">
                 <label class="control-label">Category</label>
-                <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,"CategoryId","CategoryName"))"></select>
+                <select class="form-control" asp-for="CategoryId"
+                        asp-items="@(new SelectList(ViewBag.Categories ?? new List<Category>(), "CategoryId", "CategoryName"))">
+                </select>
+
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">

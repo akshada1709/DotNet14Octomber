@@ -19,15 +19,31 @@ namespace DIPatternDemo1.Controllers
             this.cat = cat;
         }
         // GET: ProductController
-        public ActionResult Index()
+        public ActionResult Index(int pg = 1)
         {
-            return View(service.GetProducts());
+            var products = service.GetProducts();
+            const int pagesize = 5;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+
+            int recscount = products.Count();
+
+            var pager = new Pager(recscount, pg, pagesize);
+
+            int recskip = (pg - 1) * pagesize;
+
+            var data = products.Skip(recskip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+            return View(data);
         }
 
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(service.GetProductById(id));
         }
 
         // GET: ProductController/Create
@@ -44,28 +60,29 @@ namespace DIPatternDemo1.Controllers
         {
             try
             {
-                if (file != null && file.Length > 0)
+                //to upload image in images folder
+                //~ means root folder
+                using (var fs = new FileStream(env.WebRootPath + "\\images\\" + file.FileName, FileMode.Create, FileAccess.Write))
                 {
-                    string filePath = Path.Combine(env.WebRootPath, "images", file.FileName);
-
-                    // Save the file
-                    using (var fs = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fs);
-                    }
-
-                    // Set the product's image URL
-                    prod.ImageUrl = "~/images/" + file.FileName;
-
-                    // Add product to the service
-                    service.AddProduct(prod);
+                    file.CopyTo(fs);
+                }
+                prod.ImageUrl = "~/images/" + file.FileName;
+                var result = service.AddProduct(prod);
+                if (result >= 1)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Error = " something went wrong";
+                    return View();
                 }
 
-                return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View(prod);
+                ViewBag.Error = ex.Message;
+                return View();
             }
         }
 
@@ -84,14 +101,45 @@ namespace DIPatternDemo1.Controllers
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Product prod, IFormFile file)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                string oldimageurl = TempData["oldUrl"].ToString();
+                if (file != null) // to check user has uploaded new image
+                {
+                    // new image adde to project
+                    using (var fs = new FileStream(env.WebRootPath + "\\images\\" + file.FileName, FileMode.Create, FileAccess.Write))
+                    {
+                        file.CopyTo(fs);
+                    }
+                    prod.ImageUrl = "~/images/" + file.FileName;
+
+                    // remove old image
+                    string[] str = oldimageurl.Split("/");
+                    string str1 = (str[str.Length - 1]);
+                    string path = env.WebRootPath + "\\images\\" + str1;
+                    System.IO.File.Delete(path);
+                }
+                else
+                {
+                    prod.ImageUrl = oldimageurl;
+                }
+
+                int res = service.UpdateProduct(prod);
+                if (res == 1)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "something went wrong";
+                    return View();
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
@@ -99,22 +147,41 @@ namespace DIPatternDemo1.Controllers
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(service.GetProductById(id));
         }
 
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var p = service.GetProductById(id);
+                // remove old image
+                string[] str = p.ImageUrl.Split("/");
+                string str1 = (str[str.Length - 1]);
+                string path = env.WebRootPath + "\\images\\" + str1;
+                System.IO.File.Delete(path);
+
+                int res = service.DeleteProduct(id);
+                if (res == 1)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Error = "Something went wrong";
+                    return View();
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 return View();
             }
+
         }
     }
 }
