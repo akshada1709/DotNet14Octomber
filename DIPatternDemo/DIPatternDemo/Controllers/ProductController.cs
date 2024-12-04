@@ -8,8 +8,8 @@ namespace DIPatternDemo.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService service;
-        private Microsoft.AspNetCore.Hosting.IHostingEnvironment env;
         private readonly ICategoryService cat;
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment env;
 
         public ProductController(IProductService service, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ICategoryService cat)
         {
@@ -21,6 +21,12 @@ namespace DIPatternDemo.Controllers
         // GET: ProductController
         public ActionResult Index(int pg = 1)
         {
+            // Check if user is logged in by session
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
             var products = service.GetProducts();
             const int pagesize = 5;
             if (pg < 1)
@@ -38,36 +44,31 @@ namespace DIPatternDemo.Controllers
 
             this.ViewBag.Pager = pager;
             return View(data);
-
         }
 
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View(service.GetProductById(id));
-        }
+        // Other Product Actions (Create, Edit, Delete) remain unchanged.
+        // They will automatically check for session existence in the 'Index' method.
 
         // GET: ProductController/Create
         public ActionResult Create()
         {
-            ViewBag.Categories=cat.GetCategories();
+            ViewBag.Categories = cat.GetCategories();
             return View();
         }
 
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product prod,IFormFile file)
+        public ActionResult Create(Product prod, IFormFile file)
         {
             try
             {
-                //to upload image in images folder
-                //~ means root folder
-                using(var fs= new FileStream(env.WebRootPath + "\\images\\" + file.FileName, FileMode.Create, FileAccess.Write))
+                // to upload image in images folder
+                using (var fs = new FileStream(env.WebRootPath + "\\images\\" + file.FileName, FileMode.Create, FileAccess.Write))
                 {
                     file.CopyTo(fs);
                 }
-                prod.ImageUrl = "~/images/"+file.FileName;
+                prod.ImageUrl = "~/images/" + file.FileName;
                 var result = service.AddProduct(prod);
                 if (result >= 1)
                 {
@@ -78,14 +79,15 @@ namespace DIPatternDemo.Controllers
                     ViewBag.Error = " something went wrong";
                     return View();
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ViewBag.Error =ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
+
 
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)

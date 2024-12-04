@@ -4,7 +4,8 @@ namespace DIPatternDemo.Repositories
 {
     public interface IUserRepository
     {
-        int Register(User user);
-        User Login(string email, string password);
+        int AddUser(User user);
+        User GetUserByEmail(string email);
+        bool ValidateUser(string email, string password);
     }
 }

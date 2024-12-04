@@ -1,0 +1,30 @@
+﻿@model DIPatternDemo.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+<form asp-action="Login" method="post">
+    <div>
+        <label>Email</label>
+        <input name="email" type="email" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input name="password" type="password" />
+    </div>
+    <button type="submit">Login</button>
+</form>
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p>@ViewData["ErrorMessage"]</p>
+}
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

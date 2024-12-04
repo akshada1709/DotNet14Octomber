@@ -1,5 +1,6 @@
 ﻿using DIPatternDemo.Data;
 using DIPatternDemo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DIPatternDemo.Repositories
 {
@@ -9,16 +10,24 @@ namespace DIPatternDemo.Repositories
 
         public UserRepository(ApplicationDbContext db) 
         {
-             
-        }
-        public User Login(string email, string password)
-        {
-            throw new NotImplementedException();
+             this.db = db;
         }
 
-        public int Register(User user)
+        public int AddUser(User user)
         {
-            throw new NotImplementedException();
+            db.Users1?.Add(user);
+            return db.SaveChanges();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return db.Users1?.FirstOrDefault(u => u.Email == email);
+        }
+
+        public bool ValidateUser(string email, string password)
+        {
+            var user = GetUserByEmail(email);
+            return user != null && user.Password == password;
         }
     }
 }
